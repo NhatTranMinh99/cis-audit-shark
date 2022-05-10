@@ -1,0 +1,60 @@
+{
+    "rules": [
+        {
+            "id": "1",
+            "name": "Ensure auditd is installed",
+            "cmd": ["dpkg -s auditd audispd-plugins | grep Status"],
+            "output": ["Status: install ok installed"],
+            "recommendation": ["apt install auditd audispd-plugins"]
+        },
+        {
+            "id": "2",
+            "name": "Ensure auditd service is enabled",
+            "cmd": ["systemctl is-enabled auditd"],
+            "output": ["enabled"],
+            "recommendation": ["systemctl --now enable auditd"]
+        },
+        {
+            "id": "3",
+            "name": "Ensure audit logs are not automatically deleted",
+            "cmd": ["sudo grep max_log_file_action /etc/audit/auditd.conf"],
+            "output": ["max_log_file_action = keep_logs"],
+            "recommendation": ["Manually set max_log_file_action to keep_logs in /etc/audit/auditd.conf"]
+        },
+        {
+            "id": "4",
+            "name": "Ensure rsyslog is installed",
+            "cmd": ["dpkg -s rsyslog | grep Status"],
+            "output": ["Status: install ok installed"],
+            "recommendation": ["apt install rsyslog"]
+        },
+        {
+            "id": "5",
+            "name": "Ensure rsyslog Service is enabled",
+            "cmd": ["systemctl is-enabled rsyslog"],
+            "output": ["enabled"],
+            "recommendation": ["systemctl --now enable rsyslog"]
+        },
+        {
+            "id": "6",
+            "name": "Ensure journald is configured to send logs to rsyslog",
+            "cmd": ["grep -e ForwardToSyslog /etc/systemd/journald.conf"],
+            "output": ["ForwardToSyslog=yes"],
+            "recommendation": ["Manually set ForwardToSyslog=yes in /etc/systemd/journald.conf"]
+        },
+        {
+            "id": "7",
+            "name": "Ensure journald is configured to compress large log files",
+            "cmd": ["grep -e Compress /etc/systemd/journald.conf"],
+            "output": ["Compress=yes"],
+            "recommendation": ["Manually set Compress=yes in /etc/systemd/journald.conf"]
+        },
+        {
+            "id": "8",
+            "name": "Ensure journald is configured to write logfiles to persistent disk",
+            "cmd": ["grep -e Storage /etc/systemd/journald.conf"],
+            "output": ["Storage=persistent"],
+            "recommendation": ["Manually set Storage=persistent in /etc/systemd/journald.conf"]
+        }
+    ]
+}

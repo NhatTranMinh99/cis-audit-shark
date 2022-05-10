@@ -1,0 +1,64 @@
+{
+    "rules": [
+        {
+            "id": "1",
+            "name": "Ensure ufw is installed",
+            "cmd": ["dpkg -s ufw | grep Status"],
+            "output": ["Status: install ok installed"],
+            "recommendation": ["apt install ufw"]
+        },
+        {
+            "id": "2",
+            "name": "Ensure ufw service is enabled",
+            "cmd": ["systemctl is-enabled ufw", 
+                "ufw status | grep Status"],
+            "output": ["enabled", 
+                "Status: active"],
+            "recommendation": ["ufw enable"]
+        },
+        {
+            "id": "3",
+            "name": "Ensure nftables is installed",
+            "cmd": ["dpkg-query -s nftables | grep Status"],
+            "output": ["Status: install ok installed"],
+            "recommendation": ["apt install nftables"]
+        },
+        {
+            "id": "4",
+            "name": "Ensure ufw is uninstalled or disabled with nftables",
+            "cmd": ["dpkg-query -s ufw | grep Status", 
+                "ufw status"],
+            "output": ["Status: install ok installed", 
+                "Status: inactive"],
+            "recommendation": ["ufw disable"]
+        },
+        {
+            "id": "5",
+            "name": "Ensure nftables service is enabled",
+            "cmd": ["systemctl is-enabled nftables"],
+            "output": ["enabled"],
+            "recommendation": ["systemctl enable nftables"]
+        },
+        {
+            "id": "6",
+            "name": "Ensure nftables is not installed with iptables",
+            "cmd": ["dpkg -s nftables"],
+            "output": ["dpkg-query: package 'nftables' is not installed"],
+            "recommendation": ["apt purge nftables"]
+        },
+        {
+            "id": "7",
+            "name": "Ensure ufw is uninstalled or disabled with iptables",
+            "cmd": ["systemctl is-enabled ufw"],
+            "output": ["masked"],
+            "recommendation": ["apt purge ufw"]
+        },
+        {
+            "id": "8",
+            "name": "Ensure ufw is uninstalled or disabled with iptables",
+            "cmd": ["systemctl is-enabled ufw"],
+            "output": ["masked"],
+            "recommendation": ["apt purge ufw"]
+        }
+    ]
+}

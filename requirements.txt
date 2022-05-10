@@ -1,0 +1,8 @@
+distro
+platform
+tqdm
+prettytable
+json
+subprocess
+shlex
+argparse

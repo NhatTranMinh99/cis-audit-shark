@@ -1,0 +1,151 @@
+{
+    "rules": [
+        {
+            "id": "1",
+            "name": "Ensure mounting of cramfs filesystems is disabled",
+            "cmd": ["lsmod | grep cramfs"],
+            "output": [""],
+            "recommendation": ["Create file /etc/modprobe.d/cramfs.conf and add: install cramfs /bin/true. Then run: rmmod cramfs."]
+        },
+        {
+            "id": "2",
+            "name": "Ensure mounting of freevxfs filesystems is disabled",
+            "cmd": ["lsmod | grep freevxfs"],
+            "output": [""],
+            "recommendation": ["Create file /etc/modprobe.d/freevxfs.conf and add: install freevxfs /bin/true. Then run: rmmod freevxfs."]
+        },
+        {
+            "id": "3",
+            "name": "Ensure mounting of jffs2 filesystems is disabled",
+            "cmd": ["lsmod | grep jffs2"],
+            "output": [""],
+            "recommendation": ["Create file /etc/modprobe.d/jffs2.conf and add: install jffs2 /bin/true. Then run: rmmod jffs2."]
+        },
+        {
+            "id": "4",
+            "name": "Ensure mounting of hfs filesystems is disabled",
+            "cmd": ["lsmod | grep hfs"],
+            "output": [""],
+            "recommendation": ["Create file /etc/modprobe.d/hfs.conf and add: install hfs /bin/true. Then run: rmmod hfs."]
+        },
+        {
+            "id": "5",
+            "name": "Ensure mounting of hfsplus filesystems is disabled",
+            "cmd": ["lsmod | grep hfsplus"],
+            "output": [""],
+            "recommendation": ["Create file /etc/modprobe.d/hfsplus.conf and add: install hfsplus /bin/true. Then run: rmmod hfsplus."]
+        },
+        {
+            "id": "6",
+            "name": "Ensure mounting of squashfs filesystems is disabled",
+            "cmd": ["lsmod | grep squashfs"],
+            "output": [""],
+            "recommendation": ["Create file /etc/modprobe.d/squashfs.conf and add: install squashfs /bin/true. Then run: rmmod squashfs."]
+        },
+        {
+            "id": "7",
+            "name": "Ensure mounting of udf filesystems is disabled",
+            "cmd": ["lsmod | grep udf"],
+            "output": [""],
+            "recommendation": ["Create file /etc/modprobe.d/udf.conf and add: install udf /bin/true. Then run: rmmod udf."]
+        },
+        {
+            "id": "8",
+            "name": "Ensure /tmp is configured",
+            "cmd": ["findmnt -n /tmp"],
+            "output": ["/tmp tmpfs tmpfs rw,nosuid,nodev,noexec"],
+            "recommendation": ["Add to /etc/fstab: tmpfs /tmp tmpfs defaults,rw,nosuid,nodev,noexec,relatime 0 0"]
+        },
+        {
+            "id": "9",
+            "name": "Ensure nodev option set on /tmp partition",
+            "cmd": ["findmnt -n /tmp | grep -v nodev"],
+            "output": [""],
+            "recommendation": ["mount -o remount,nosuid,nodev,noexec /tmp"]
+        },
+        {
+            "id": "10",
+            "name": "Ensure nosuid option set on /tmp partition",
+            "cmd": ["findmnt -n /tmp | grep -v nosuid"],
+            "output": [""],
+            "recommendation": ["mount -o remount,nosuid,nodev,noexec /tmp"]
+        },
+        {
+            "id": "11",
+            "name": "Ensure noexec option set on /tmp partition",
+            "cmd": ["findmnt -n /tmp | grep -v noexec"],
+            "output": [""],
+            "recommendation": ["mount -o remount,nosuid,nodev,noexec /tmp"]
+        },
+        {
+            "id": "12",
+            "name": "Ensure /dev/shm is configured",
+            "cmd": ["findmnt -n /dev/shm"],
+            "output": ["/dev/shm tmpfs tmpfs rw,nosuid,nodev,noexec"],
+            "recommendation": ["Add to /etc/fstab: tmpfs /dev/shm tmpfs defaults,noexec,nodev,nosuid,seclabel 0 0"]
+        },
+        {
+            "id": "13",
+            "name": "Ensure nodev option set on /dev/shm partition",
+            "cmd": ["findmnt -n /dev/shm | grep -v nodev"],
+            "output": [""],
+            "recommendation": ["mount -o remount,nosuid,nodev,noexec /dev/shm"]
+        },
+        {
+            "id": "14",
+            "name": "Ensure nosuid option set on /dev/shm partition",
+            "cmd": ["findmnt -n /dev/shm | grep -v nosuid"],
+            "output": [""],
+            "recommendation": ["mount -o remount,nosuid,nodev,noexec /dev/shm"]
+        },
+        {
+            "id": "15",
+            "name": "Ensure noexec option set on /dev/shm partition",
+            "cmd": ["findmnt -n /dev/shm | grep -v noexec"],
+            "output": [""],
+            "recommendation": ["mount -o remount,nosuid,nodev,noexec /dev/shm"]
+        },
+        {
+            "id": "16",
+            "name": "Ensure /var/tmp partition includes the nodev option",
+            "cmd": ["findmnt -n /var/tmp | grep -v nodev"],
+            "output": [""],
+            "recommendation": ["mount -o remount,nosuid,nodev,noexec /var/tmp"]
+        },
+        {
+            "id": "17",
+            "name": "Ensure /var/tmp partition includes the nosuid option",
+            "cmd": ["findmnt -n /var/tmp | grep -v nosuid"],
+            "output": [""],
+            "recommendation": ["mount -o remount,nosuid,nodev,noexec /var/tmp"]
+        },
+        {
+            "id": "18",
+            "name": "Ensure /var/tmp partition includes the noexec option",
+            "cmd": ["findmnt -n /var/tmp | grep -v noexec"],
+            "output": [""],
+            "recommendation": ["mount -o remount,nosuid,nodev,noexec /var/tmp"]
+        },
+        {
+            "id": "19",
+            "name": "Ensure /home partition includes the nodev option",
+            "cmd": ["findmnt -n /home | grep -v nodev"],
+            "output": [""],
+            "recommendation": ["mount -o remount,nodev /home"]
+        },
+        {
+            "id": "20",
+            "name": "Disable Automounting",
+            "cmd": ["systemctl is-enabled autofs"],
+            "output": ["disabled"],
+            "recommendation": ["systemctl --now disable autofs"]
+        },
+        {
+            "id": "21",
+            "name": "Disable USB Storage",
+            "cmd": ["modprobe -n -v usb-storage"],
+            "output": ["install /bin/true"],
+            "recommendation": ["Create file /etc/modprobe.d/usb_storage.conf and add: install usb_storage /bin/true. Then run: rmmod usb_storage."]
+        }
+    ]
+}
